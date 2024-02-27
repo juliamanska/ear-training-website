@@ -1,5 +1,7 @@
+import NavBar from "./components/NavBar";
+
 function App() {
-  return <h2 className="mx-10">Julia</h2>;
+  return <NavBar />;
 }
 
 export default App;
