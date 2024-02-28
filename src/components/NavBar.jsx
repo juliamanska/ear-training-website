@@ -6,11 +6,17 @@ import {
   NavigationMenuList,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const NavBar = () => {
   return (
     <>
-      <nav className="p-5 px-20 my-5 flex bg-green-100 gap-10">
+      <nav className="p-5 sm:px-20 my-5 flex bg-green-100 gap-10">
         <NavLink to="/">
           <div className="px-3">
             <svg
@@ -26,8 +32,8 @@ const NavBar = () => {
             <h1 className="heading-logo">Ear Training</h1>
           </div>
         </NavLink>
-        <NavigationMenu>
-          <NavigationMenuList className="gap-5">
+        <NavigationMenu className="gap-5 hidden sm:flex">
+          <NavigationMenuList>
             <NavigationMenuItem>
               <NavLink to="/intervals">
                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>
@@ -58,6 +64,25 @@ const NavBar = () => {
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
+        <DropdownMenu>
+          <DropdownMenuTrigger className="block p-5 px-20 sm:hidden open-menu">
+            Open Menu
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuItem>
+              <NavLink to="/intervals">Intervals</NavLink>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <NavLink to="/dominant7">D7</NavLink>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <NavLink to="/triads">Triads</NavLink>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <NavLink to="/tetrads">Tetrads</NavLink>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </nav>
       <Routes>
         <Route path="/" element={<h1>Main page</h1>} />
