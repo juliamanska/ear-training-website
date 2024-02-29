@@ -41,7 +41,18 @@ const ExerciseContainer = () => {
 
   return (
     <>
-      <Button onClick={() => playRandomTetrad(audioMap)}>Start</Button>
+      <div className="bg-green-200 p-5 flex flex-col">
+        {Object.keys(audioMap).map((key) => (
+          <Button
+            variant="secondary"
+            key={key}
+            onClick={() => checkResult(key)}
+          >
+            {key}
+          </Button>
+        ))}
+        <Button onClick={() => playRandomTetrad(audioMap)}>Start</Button>
+      </div>
     </>
   );
 };
