@@ -5,6 +5,7 @@ import { useToast } from "@/components/ui/use-toast";
 const ExerciseContainer = () => {
   let [correct, setCorrect] = useState(0);
   let [incorrect, setIncorrect] = useState(0);
+  let [isStarted, setIsStarted] = useState(false);
   const [previousKey, setPreviousKey] = useState(null);
   const { toast } = useToast();
 
@@ -54,6 +55,11 @@ const ExerciseContainer = () => {
     collection[previousKey].play();
   };
 
+  const handleStart = (collection) => {
+    setIsStarted(true);
+    playRandomTetrad(collection);
+  };
+
   return (
     <>
       <div className="bg-green-200 p-5 flex flex-col">
@@ -61,14 +67,17 @@ const ExerciseContainer = () => {
           <Button
             variant="secondary"
             key={key}
+            disabled={!isStarted}
             onClick={() => checkResult(key)}
           >
             {key}
           </Button>
         ))}
         <div>
-          <Button onClick={() => playRandomTetrad(audioMap)}>Start</Button>
-          <Button onClick={() => replayAudio(audioMap)}>Replay</Button>
+          <Button onClick={() => handleStart(audioMap)}>Start</Button>
+          <Button disabled={!isStarted} onClick={() => replayAudio(audioMap)}>
+            Replay
+          </Button>
         </div>
         <div>
           <p>Correct: {correct}</p>
