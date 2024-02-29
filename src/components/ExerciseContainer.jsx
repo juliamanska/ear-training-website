@@ -4,7 +4,7 @@ import { useState } from "react";
 const ExerciseContainer = () => {
   let [correct, setCorrect] = useState(0);
   let [incorrect, setIncorrect] = useState(0);
-  let randomKey;
+  const [previousKey, setPreviousKey] = useState(null);
 
   const audioMap = {
     "dur z 6>": new Audio("src/assets/tetrads/dur_6m.mp3"),
@@ -29,13 +29,14 @@ const ExerciseContainer = () => {
   };
 
   const playRandomTetrad = (collection) => {
-    randomKey = getRandomKey(collection);
+    const randomKey = getRandomKey(collection);
+    setPreviousKey(randomKey);
     collection[randomKey].play();
     console.log(randomKey);
   };
 
   const checkResult = (value) => {
-    if (value === randomKey) {
+    if (value === previousKey) {
       setCorrect((prev) => prev + 1);
     } else {
       setIncorrect((prev) => prev + 1);
