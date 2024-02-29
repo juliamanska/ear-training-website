@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/button";
 
 const ExerciseContainer = () => {
+  let randomKey;
+
   const audioMap = {
     "dur z 6>": new Audio("src/assets/tetrads/dur_6m.mp3"),
     "dur z 6": new Audio("src/assets/tetrads/dur_6w.mp3"),
@@ -18,21 +20,34 @@ const ExerciseContainer = () => {
     "zmn z 7>": new Audio("src/assets/tetrads/zmn_7zm.mp3"),
   };
 
-  function getRandomKey(collection) {
+  const getRandomKey = (collection) => {
     let keys = Object.keys(collection);
     return keys[Math.floor(Math.random() * keys.length)];
-  }
+  };
 
-  const playRandomTetrad = (soundsMap) => {
-    let randomKey = getRandomKey(soundsMap);
-    soundsMap[randomKey].play();
+  const playRandomTetrad = (collection) => {
+    randomKey = getRandomKey(collection);
+    collection[randomKey].play();
+  };
+
+  const checkResult = (value) => {
+    if (value === randomKey) {
+      console.log("correct");
+    } else {
+      console.log("incorrect");
+    }
+    playRandomTetrad(audioMap);
   };
 
   return (
     <>
       <div className="bg-green-200 p-5 flex flex-col">
         {Object.keys(audioMap).map((key) => (
-          <Button variant="secondary" key={key}>
+          <Button
+            variant="secondary"
+            key={key}
+            onClick={() => checkResult(key)}
+          >
             {key}
           </Button>
         ))}
