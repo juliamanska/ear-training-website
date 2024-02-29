@@ -1,6 +1,9 @@
 import { Button } from "@/components/ui/button";
+import { useState } from "react";
 
 const ExerciseContainer = () => {
+  let [correct, setCorrect] = useState(0, "Correct!");
+  let [incorrect, setIncorrect] = useState(0, "Incorrect");
   let randomKey;
 
   const audioMap = {
@@ -28,13 +31,14 @@ const ExerciseContainer = () => {
   const playRandomTetrad = (collection) => {
     randomKey = getRandomKey(collection);
     collection[randomKey].play();
+    console.log(randomKey);
   };
 
   const checkResult = (value) => {
     if (value === randomKey) {
-      console.log("correct");
+      setCorrect((prev) => prev + 1);
     } else {
-      console.log("incorrect");
+      setIncorrect((prev) => prev + 1);
     }
     playRandomTetrad(audioMap);
   };
@@ -52,6 +56,10 @@ const ExerciseContainer = () => {
           </Button>
         ))}
         <Button onClick={() => playRandomTetrad(audioMap)}>Start</Button>
+        <div>
+          <p>Correct: {correct}</p>
+          <p>Incorrect: {incorrect}</p>
+        </div>
       </div>
     </>
   );
