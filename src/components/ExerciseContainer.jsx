@@ -2,8 +2,8 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 
 const ExerciseContainer = () => {
-  let [correct, setCorrect] = useState(0, "Correct!");
-  let [incorrect, setIncorrect] = useState(0, "Incorrect");
+  let [correct, setCorrect] = useState(0);
+  let [incorrect, setIncorrect] = useState(0);
   let randomKey;
 
   const audioMap = {
