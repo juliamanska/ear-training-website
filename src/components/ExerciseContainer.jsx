@@ -1,10 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { useToast } from "@/components/ui/use-toast";
 
 const ExerciseContainer = () => {
   let [correct, setCorrect] = useState(0);
   let [incorrect, setIncorrect] = useState(0);
   const [previousKey, setPreviousKey] = useState(null);
+  const { toast } = useToast();
 
   const audioMap = {
     "dur z 6>": new Audio("src/assets/tetrads/dur_6m.mp3"),
@@ -40,8 +42,12 @@ const ExerciseContainer = () => {
       setCorrect((prev) => prev + 1);
     } else {
       setIncorrect((prev) => prev + 1);
+      toast({
+        title: "Correct: ",
+        description: `${previousKey}`,
+      });
     }
-    playRandomTetrad(audioMap);
+    setTimeout(() => playRandomTetrad(audioMap), 500);
   };
 
   return (
