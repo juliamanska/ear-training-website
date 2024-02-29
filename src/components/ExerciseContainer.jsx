@@ -2,29 +2,13 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
 
-const ExerciseContainer = () => {
+// eslint-disable-next-line react/prop-types
+const ExerciseContainer = ({ soundsMap }) => {
   let [correct, setCorrect] = useState(0);
   let [incorrect, setIncorrect] = useState(0);
   let [isStarted, setIsStarted] = useState(false);
   const [previousKey, setPreviousKey] = useState(null);
   const { toast } = useToast();
-
-  const audioMap = {
-    "dur z 6>": new Audio("src/assets/tetrads/dur_6m.mp3"),
-    "dur z 6": new Audio("src/assets/tetrads/dur_6w.mp3"),
-    "dur z 7": new Audio("src/assets/tetrads/dur_7m.mp3"),
-    "dur z 7<": new Audio("src/assets/tetrads/dur_7w.mp3"),
-    "dur z 9>": new Audio("src/assets/tetrads/dur_9m.mp3"),
-    "dur z 9": new Audio("src/assets/tetrads/dur_9w.mp3"),
-    "moll z 6>": new Audio("src/assets/tetrads/moll_6m.mp3"),
-    "moll z 6": new Audio("src/assets/tetrads/moll_6w.mp3"),
-    "moll z 7": new Audio("src/assets/tetrads/moll_7m.mp3"),
-    "moll z 7<": new Audio("src/assets/tetrads/moll_7w.mp3"),
-    "moll z 9>": new Audio("src/assets/tetrads/moll_9m.mp3"),
-    "moll z 9": new Audio("src/assets/tetrads/moll_9w.mp3"),
-    "zmn z 7": new Audio("src/assets/tetrads/zmn_7.mp3"),
-    "zmn z 7>": new Audio("src/assets/tetrads/zmn_7zm.mp3"),
-  };
 
   const getRandomKey = (collection) => {
     let keys = Object.keys(collection);
@@ -38,7 +22,7 @@ const ExerciseContainer = () => {
     console.log(randomKey);
   };
 
-  const checkResult = (value) => {
+  const checkResult = (value, collection) => {
     if (value === previousKey) {
       setCorrect((prev) => prev + 1);
     } else {
@@ -48,7 +32,7 @@ const ExerciseContainer = () => {
         description: `${previousKey}`,
       });
     }
-    setTimeout(() => playRandomTetrad(audioMap), 500);
+    setTimeout(() => playRandomTetrad(collection), 500);
   };
 
   const replayAudio = (collection) => {
@@ -69,22 +53,22 @@ const ExerciseContainer = () => {
   return (
     <>
       <div className="bg-green-200 p-5 flex flex-col">
-        {Object.keys(audioMap).map((key) => (
+        {Object.keys(soundsMap).map((key) => (
           <Button
             variant="secondary"
             key={key}
             disabled={!isStarted}
-            onClick={() => checkResult(key)}
+            onClick={() => checkResult(key, soundsMap)}
           >
             {key}
           </Button>
         ))}
         <div>
           {!isStarted && (
-            <Button onClick={() => handleStart(audioMap)}>Start</Button>
+            <Button onClick={() => handleStart(soundsMap)}>Start</Button>
           )}
           {isStarted && <Button onClick={() => restart()}>Restart</Button>}
-          <Button disabled={!isStarted} onClick={() => replayAudio(audioMap)}>
+          <Button disabled={!isStarted} onClick={() => replayAudio(soundsMap)}>
             Replay
           </Button>
         </div>
@@ -96,5 +80,4 @@ const ExerciseContainer = () => {
     </>
   );
 };
-
 export default ExerciseContainer;

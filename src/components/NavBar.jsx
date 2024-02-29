@@ -12,6 +12,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import TetradsExercise from "./TetradsExercise";
 
 const NavBar = () => {
   return (
@@ -88,7 +89,7 @@ const NavBar = () => {
         <Route path="/" element={<h1>Main page</h1>} />
         <Route path="/intervals" element={<h1>Intervals</h1>} />
         <Route path="/triads" element={<h1>Triads</h1>} />
-        <Route path="/tetrads" element={<h1>Tetrads</h1>} />
+        <Route path="/tetrads" element={<TetradsExercise />} />
         <Route path="/dominant7" element={<h1>Dominant seventh chord</h1>} />
         <Route path="*" element={<h1>Not Found</h1>} />
       </Routes>
