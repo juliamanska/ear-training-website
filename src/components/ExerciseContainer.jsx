@@ -50,6 +50,10 @@ const ExerciseContainer = () => {
     setTimeout(() => playRandomTetrad(audioMap), 500);
   };
 
+  const replayAudio = (collection) => {
+    collection[previousKey].play();
+  };
+
   return (
     <>
       <div className="bg-green-200 p-5 flex flex-col">
@@ -62,7 +66,10 @@ const ExerciseContainer = () => {
             {key}
           </Button>
         ))}
-        <Button onClick={() => playRandomTetrad(audioMap)}>Start</Button>
+        <div>
+          <Button onClick={() => playRandomTetrad(audioMap)}>Start</Button>
+          <Button onClick={() => replayAudio(audioMap)}>Replay</Button>
+        </div>
         <div>
           <p>Correct: {correct}</p>
           <p>Incorrect: {incorrect}</p>
