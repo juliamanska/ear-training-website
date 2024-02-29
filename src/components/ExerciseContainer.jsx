@@ -60,6 +60,12 @@ const ExerciseContainer = () => {
     playRandomTetrad(collection);
   };
 
+  const restart = () => {
+    setIsStarted(false);
+    setCorrect(0);
+    setIncorrect(0);
+  };
+
   return (
     <>
       <div className="bg-green-200 p-5 flex flex-col">
@@ -74,7 +80,10 @@ const ExerciseContainer = () => {
           </Button>
         ))}
         <div>
-          <Button onClick={() => handleStart(audioMap)}>Start</Button>
+          {!isStarted && (
+            <Button onClick={() => handleStart(audioMap)}>Start</Button>
+          )}
+          {isStarted && <Button onClick={() => restart()}>Restart</Button>}
           <Button disabled={!isStarted} onClick={() => replayAudio(audioMap)}>
             Replay
           </Button>
