@@ -1,3 +1,5 @@
+import { Button } from "@/components/ui/button";
+
 const ExerciseContainer = () => {
   const audioMap = {
     adur_6m: new Audio("src/assets/tetrads/dur_6m.mp3"),
@@ -28,7 +30,7 @@ const ExerciseContainer = () => {
 
   return (
     <>
-      <button onClick={() => playRandomTetrad(audioMap)}>Sound</button>
+      <Button onClick={() => playRandomTetrad(audioMap)}>Start</Button>
     </>
   );
 };
