@@ -7,23 +7,50 @@ const ExerciseContainer = ({ soundsMap }) => {
   let [correct, setCorrect] = useState(0);
   let [incorrect, setIncorrect] = useState(0);
   let [isStarted, setIsStarted] = useState(false);
-  const [previousKey, setPreviousKey] = useState(null);
+  const [previousValue, setPreviousValue] = useState(null);
   const { toast } = useToast();
 
-  const getRandomKey = (collection) => {
-    let keys = Object.keys(collection);
-    return keys[Math.floor(Math.random() * keys.length)];
+  const getRandomValue = (collection) => {
+    let values = Object.values(collection);
+
+    if (values.every(Array.isArray)) {
+      const flattenedArray = values.flat();
+      return flattenedArray[Math.floor(Math.random() * flattenedArray.length)];
+    } else {
+      return values[Math.floor(Math.random() * values.length)];
+    }
   };
 
   const playRandomTetrad = (collection) => {
-    const randomKey = getRandomKey(collection);
-    setPreviousKey(randomKey);
-    collection[randomKey].play();
-    console.log(randomKey);
+    const randomValue = getRandomValue(collection);
+    setPreviousValue(randomValue);
+    randomValue.play();
+    console.log(randomValue);
   };
 
-  const checkResult = (value, collection) => {
-    if (value === previousKey) {
+  const checkResult = (userChoice, collection) => {
+    let previousKey = null;
+
+    for (const key in collection) {
+      if (Array.isArray(collection[key])) {
+        if (collection[key].includes(previousValue)) {
+          previousKey = key;
+          break;
+        }
+      } else {
+        if (collection[key] === previousValue) {
+          previousKey = key;
+          break;
+        }
+      }
+    }
+
+    if (
+      Array.isArray(collection[userChoice]) &&
+      collection[userChoice].includes(previousValue)
+    ) {
+      setCorrect((prev) => prev + 1);
+    } else if (userChoice === previousValue) {
       setCorrect((prev) => prev + 1);
     } else {
       setIncorrect((prev) => prev + 1);
@@ -35,8 +62,8 @@ const ExerciseContainer = ({ soundsMap }) => {
     setTimeout(() => playRandomTetrad(collection), 500);
   };
 
-  const replayAudio = (collection) => {
-    collection[previousKey].play();
+  const replayAudio = () => {
+    previousValue.play();
   };
 
   const handleStart = (collection) => {
