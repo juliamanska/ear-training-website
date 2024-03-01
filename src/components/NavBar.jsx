@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import TetradsExercise from "./TetradsExercise";
 import Dominant7thExercise from "./Dominant7thExercise";
+import IntervalsExercise from "./ui/IntervalsExercise";
 
 const NavBar = () => {
   return (
@@ -88,7 +89,7 @@ const NavBar = () => {
       </nav>
       <Routes>
         <Route path="/" element={<h1>Main page</h1>} />
-        <Route path="/intervals" element={<h1>Intervals</h1>} />
+        <Route path="/intervals" element={<IntervalsExercise />} />
         <Route path="/triads" element={<h1>Triads</h1>} />
         <Route path="/tetrads" element={<TetradsExercise />} />
         <Route path="/dominant7th" element={<Dominant7thExercise />} />
