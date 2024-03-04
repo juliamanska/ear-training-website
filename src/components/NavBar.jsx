@@ -15,6 +15,7 @@ import {
 import TetradsExercise from "./TetradsExercise";
 import Dominant7thExercise from "./Dominant7thExercise";
 import IntervalsExercise from "./ui/IntervalsExercise";
+import TriadsExercise from "./TriadsExercise";
 
 const NavBar = () => {
   return (
@@ -90,7 +91,7 @@ const NavBar = () => {
       <Routes>
         <Route path="/" element={<h1>Main page</h1>} />
         <Route path="/intervals" element={<IntervalsExercise />} />
-        <Route path="/triads" element={<h1>Triads</h1>} />
+        <Route path="/triads" element={<TriadsExercise />} />
         <Route path="/tetrads" element={<TetradsExercise />} />
         <Route path="/dominant7th" element={<Dominant7thExercise />} />
         <Route path="*" element={<h1>Not Found</h1>} />

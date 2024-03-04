@@ -72,7 +72,6 @@ const ExerciseContainer = ({ soundsMap }) => {
   };
 
   const restart = () => {
-    setIsStarted(false);
     setCorrect(0);
     setIncorrect(0);
   };
