@@ -71,9 +71,10 @@ const ExerciseContainer = ({ soundsMap }) => {
     playRandomTetrad(collection);
   };
 
-  const restart = () => {
+  const restart = (collection) => {
     setCorrect(0);
     setIncorrect(0);
+    handleStart(collection);
   };
 
   return (
@@ -93,7 +94,9 @@ const ExerciseContainer = ({ soundsMap }) => {
           {!isStarted && (
             <Button onClick={() => handleStart(soundsMap)}>Start</Button>
           )}
-          {isStarted && <Button onClick={() => restart()}>Restart</Button>}
+          {isStarted && (
+            <Button onClick={() => restart(soundsMap)}>Restart</Button>
+          )}
           <Button disabled={!isStarted} onClick={() => replayAudio(soundsMap)}>
             Replay
           </Button>
