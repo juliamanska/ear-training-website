@@ -50,7 +50,7 @@ const ExerciseContainer = ({ soundsMap }) => {
       collection[userChoice].includes(previousValue)
     ) {
       setCorrect((prev) => prev + 1);
-    } else if (userChoice === previousValue) {
+    } else if (userChoice === previousKey) {
       setCorrect((prev) => prev + 1);
     } else {
       setIncorrect((prev) => prev + 1);
