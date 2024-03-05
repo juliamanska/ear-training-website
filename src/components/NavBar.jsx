@@ -12,6 +12,10 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import TetradsExercise from "./TetradsExercise";
+import Dominant7thExercise from "./Dominant7thExercise";
+import IntervalsExercise from "./ui/IntervalsExercise";
+import TriadsExercise from "./TriadsExercise";
 
 const NavBar = () => {
   return (
@@ -42,7 +46,7 @@ const NavBar = () => {
               </NavLink>
             </NavigationMenuItem>
             <NavigationMenuItem className="item">
-              <NavLink to="/dominant7">
+              <NavLink to="/dominant7th">
                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                   D7
                 </NavigationMenuLink>
@@ -72,7 +76,7 @@ const NavBar = () => {
             <NavLink to="/intervals">
               <DropdownMenuItem>Intervals</DropdownMenuItem>
             </NavLink>
-            <NavLink to="/dominant7">
+            <NavLink to="/dominant7th">
               <DropdownMenuItem>D7</DropdownMenuItem>
             </NavLink>
             <NavLink to="/triads">
@@ -86,10 +90,10 @@ const NavBar = () => {
       </nav>
       <Routes>
         <Route path="/" element={<h1>Main page</h1>} />
-        <Route path="/intervals" element={<h1>Intervals</h1>} />
-        <Route path="/triads" element={<h1>Triads</h1>} />
-        <Route path="/tetrads" element={<h1>Tetrads</h1>} />
-        <Route path="/dominant7" element={<h1>Dominant seventh chord</h1>} />
+        <Route path="/intervals" element={<IntervalsExercise />} />
+        <Route path="/triads" element={<TriadsExercise />} />
+        <Route path="/tetrads" element={<TetradsExercise />} />
+        <Route path="/dominant7th" element={<Dominant7thExercise />} />
         <Route path="*" element={<h1>Not Found</h1>} />
       </Routes>
     </>

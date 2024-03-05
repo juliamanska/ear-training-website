@@ -1,11 +1,13 @@
 import NavBar from "./components/NavBar";
-import ExerciseContainer from "./components/ExerciseContainer";
+import { Toaster } from "@/components/ui/toaster";
+import Staff from "./components/Staff";
 
 function App() {
   return (
     <>
       <NavBar />
-      <ExerciseContainer />
+      <Toaster />
+      <Staff />
     </>
   );
 }
