@@ -80,7 +80,22 @@ const ExerciseContainer = ({ soundsMap }) => {
     }
   };
 
+  const isLastActiveButton = (currentKey) => {
+    const activeMinusButtonsCount = items.filter(
+      (item) => item.active && item.key !== currentKey && item.key !== "+"
+    ).length;
+    return activeMinusButtonsCount === 0;
+  };
+
   const handleOption = (keyToHandle) => {
+    const activeItemCount = items.filter((item) => item.active).length;
+    if (activeItemCount === 1 && keyToHandle.active) {
+      toast({
+        title: "Warning",
+        description: "This is the last active option and cannot be removed.",
+      });
+      return;
+    }
     setItems((prevItems) =>
       prevItems.map((item) => {
         if (item.key === keyToHandle) {
@@ -118,7 +133,10 @@ const ExerciseContainer = ({ soundsMap }) => {
             >
               {key}
             </Button>
-            <Button disabled={!isStarted} onClick={() => handleOption(key)}>
+            <Button
+              disabled={!isStarted || (active && isLastActiveButton(key))}
+              onClick={() => handleOption(key)}
+            >
               {active ? "-" : "+"}
             </Button>
           </div>
