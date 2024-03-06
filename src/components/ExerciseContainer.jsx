@@ -2,12 +2,13 @@ import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
 
-// eslint-disable-next-line react/prop-types
 const ExerciseContainer = ({ soundsMap }) => {
   const [correct, setCorrect] = useState(0);
   const [incorrect, setIncorrect] = useState(0);
   const [isStarted, setIsStarted] = useState(false);
-  const [items, setItems] = useState(Object.keys(soundsMap));
+  const [items, setItems] = useState(
+    Object.keys(soundsMap).map((key) => ({ key: key, active: true }))
+  );
   const [previousValue, setPreviousValue] = useState(null);
   const { toast } = useToast();
 
@@ -27,10 +28,8 @@ const ExerciseContainer = ({ soundsMap }) => {
   };
 
   const playRandomTetrad = () => {
-    const remainingItems = Object.keys(soundsMap).filter((item) =>
-      items.includes(item)
-    );
-    const remainingSoundsMap = remainingItems.reduce((obj, key) => {
+    const remainingItems = items.filter((item) => item.active);
+    const remainingSoundsMap = remainingItems.reduce((obj, { key }) => {
       obj[key] = soundsMap[key];
       return obj;
     }, {});
@@ -82,7 +81,15 @@ const ExerciseContainer = ({ soundsMap }) => {
   };
 
   const handleOption = (keyToHandle) => {
-    setItems((prevItems) => prevItems.filter((item) => item !== keyToHandle));
+    setItems((prevItems) =>
+      prevItems.map((item) => {
+        if (item.key === keyToHandle) {
+          return { ...item, active: !item.active };
+        } else {
+          return item;
+        }
+      })
+    );
     setPreviousValue(null);
   };
 
@@ -94,7 +101,7 @@ const ExerciseContainer = ({ soundsMap }) => {
   const restart = () => {
     setCorrect(0);
     setIncorrect(0);
-    setItems(Object.keys(soundsMap));
+    setItems(Object.keys(soundsMap).map((key) => ({ key: key, active: true })));
     setPreviousValue(null);
     handleStart();
   };
@@ -102,17 +109,17 @@ const ExerciseContainer = ({ soundsMap }) => {
   return (
     <>
       <div className="bg-green-200 p-5 flex flex-col">
-        {items.map((key) => (
+        {items.map(({ key, active }) => (
           <div key={key}>
             <Button
               variant="secondary"
-              disabled={!isStarted}
+              disabled={!isStarted || !active}
               onClick={() => checkResult(key)}
             >
               {key}
             </Button>
             <Button disabled={!isStarted} onClick={() => handleOption(key)}>
-              -
+              {active ? "-" : "+"}
             </Button>
           </div>
         ))}
