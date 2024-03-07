@@ -1,14 +1,20 @@
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
 
-// eslint-disable-next-line react/prop-types
 const ExerciseContainer = ({ soundsMap }) => {
-  let [correct, setCorrect] = useState(0);
-  let [incorrect, setIncorrect] = useState(0);
-  let [isStarted, setIsStarted] = useState(false);
+  const [correct, setCorrect] = useState(0);
+  const [incorrect, setIncorrect] = useState(0);
+  const [isStarted, setIsStarted] = useState(false);
+  const [items, setItems] = useState(
+    Object.keys(soundsMap).map((key) => ({ key: key, active: true }))
+  );
   const [previousValue, setPreviousValue] = useState(null);
   const { toast } = useToast();
+
+  useEffect(() => {
+    if (isStarted) playRandomTetrad();
+  }, [items]);
 
   const getRandomValue = (collection) => {
     let values = Object.values(collection);
@@ -21,24 +27,30 @@ const ExerciseContainer = ({ soundsMap }) => {
     }
   };
 
-  const playRandomTetrad = (collection) => {
-    const randomValue = getRandomValue(collection);
+  const playRandomTetrad = () => {
+    const remainingItems = items.filter((item) => item.active);
+    const remainingSoundsMap = remainingItems.reduce((obj, { key }) => {
+      obj[key] = soundsMap[key];
+      return obj;
+    }, {});
+
+    const randomValue = getRandomValue(remainingSoundsMap);
     setPreviousValue(randomValue);
     randomValue.play();
     console.log(randomValue);
   };
 
-  const checkResult = (userChoice, collection) => {
+  const checkResult = (userChoice) => {
     let previousKey = null;
 
-    for (const key in collection) {
-      if (Array.isArray(collection[key])) {
-        if (collection[key].includes(previousValue)) {
+    for (const key in soundsMap) {
+      if (Array.isArray(soundsMap[key])) {
+        if (soundsMap[key].includes(previousValue)) {
           previousKey = key;
           break;
         }
       } else {
-        if (collection[key] === previousValue) {
+        if (soundsMap[key] === previousValue) {
           previousKey = key;
           break;
         }
@@ -46,8 +58,8 @@ const ExerciseContainer = ({ soundsMap }) => {
     }
 
     if (
-      Array.isArray(collection[userChoice]) &&
-      collection[userChoice].includes(previousValue)
+      Array.isArray(soundsMap[userChoice]) &&
+      soundsMap[userChoice].includes(previousValue)
     ) {
       setCorrect((prev) => prev + 1);
     } else if (userChoice === previousKey) {
@@ -59,45 +71,80 @@ const ExerciseContainer = ({ soundsMap }) => {
         description: `${previousKey}`,
       });
     }
-    setTimeout(() => playRandomTetrad(collection), 500);
+    setTimeout(playRandomTetrad, 500);
   };
 
   const replayAudio = () => {
-    previousValue.play();
+    if (previousValue !== null) {
+      previousValue.play();
+    }
   };
 
-  const handleStart = (collection) => {
+  const isLastActiveButton = (currentKey) => {
+    const activeMinusButtonsCount = items.filter(
+      (item) => item.active && item.key !== currentKey && item.key !== "+"
+    ).length;
+    return activeMinusButtonsCount === 0;
+  };
+
+  const handleOption = (keyToHandle) => {
+    const activeItemCount = items.filter((item) => item.active).length;
+    if (activeItemCount === 1 && keyToHandle.active) {
+      toast({
+        title: "Warning",
+        description: "This is the last active option and cannot be removed.",
+      });
+      return;
+    }
+    setItems((prevItems) =>
+      prevItems.map((item) => {
+        if (item.key === keyToHandle) {
+          return { ...item, active: !item.active };
+        } else {
+          return item;
+        }
+      })
+    );
+    setPreviousValue(null);
+  };
+
+  const handleStart = () => {
     setIsStarted(true);
-    playRandomTetrad(collection);
+    playRandomTetrad();
   };
 
-  const restart = (collection) => {
+  const restart = () => {
     setCorrect(0);
     setIncorrect(0);
-    handleStart(collection);
+    setItems(Object.keys(soundsMap).map((key) => ({ key: key, active: true })));
+    setPreviousValue(null);
+    handleStart();
   };
 
   return (
     <>
       <div className="bg-green-200 p-5 flex flex-col">
-        {Object.keys(soundsMap).map((key) => (
-          <Button
-            variant="secondary"
-            key={key}
-            disabled={!isStarted}
-            onClick={() => checkResult(key, soundsMap)}
-          >
-            {key}
-          </Button>
+        {items.map(({ key, active }) => (
+          <div key={key}>
+            <Button
+              variant="secondary"
+              disabled={!isStarted || !active}
+              onClick={() => checkResult(key)}
+            >
+              {key}
+            </Button>
+            <Button
+              disabled={!isStarted || (active && isLastActiveButton(key))}
+              onClick={() => handleOption(key)}
+            >
+              {active ? "-" : "+"}
+            </Button>
+          </div>
         ))}
         <div>
-          {!isStarted && (
-            <Button onClick={() => handleStart(soundsMap)}>Start</Button>
-          )}
-          {isStarted && (
-            <Button onClick={() => restart(soundsMap)}>Restart</Button>
-          )}
-          <Button disabled={!isStarted} onClick={() => replayAudio(soundsMap)}>
+          {!isStarted && <Button onClick={handleStart}>Start</Button>}
+          {isStarted && <Button onClick={restart}>Restart</Button>}
+          <Button disabled={!isStarted} onClick={replayAudio}>
             Replay
           </Button>
         </div>
@@ -109,4 +156,5 @@ const ExerciseContainer = ({ soundsMap }) => {
     </>
   );
 };
+
 export default ExerciseContainer;
