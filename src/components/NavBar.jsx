@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import TetradsExercise from "./TetradsExercise";
 import Dominant7thExercise from "./Dominant7thExercise";
-import IntervalsExercise from "./ui/IntervalsExercise";
+import IntervalsExercise from "./IntervalsExercise";
 import TriadsExercise from "./TriadsExercise";
 
 const NavBar = () => {

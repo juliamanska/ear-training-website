@@ -123,34 +123,47 @@ const ExerciseContainer = ({ soundsMap }) => {
 
   return (
     <>
-      <div className="bg-green-200 p-5 flex flex-col">
-        {items.map(({ key, active }) => (
-          <div key={key}>
-            <Button
-              variant="secondary"
-              disabled={!isStarted || !active}
-              onClick={() => checkResult(key)}
+      <div className="mx-auto max-w-md rounded-2xl bg-green-200 p-10 shadow ">
+        <div className="grid grid-cols-2 gap-x-10">
+          {items.map(({ key, active }) => (
+            <div
+              className="flex items-center mb-2 justify-between gap-18"
+              key={key}
             >
-              {key}
-            </Button>
+              <Button
+                variant="secondary"
+                className="w-5 sm:w-full text-md"
+                disabled={!isStarted || !active}
+                onClick={() => checkResult(key)}
+              >
+                {key}
+              </Button>
+              <Button
+                disabled={!isStarted || (active && isLastActiveButton(key))}
+                onClick={() => handleOption(key)}
+                className="px-3 text-white text-xl items-center "
+              >
+                {active ? "x" : "+"}
+              </Button>
+            </div>
+          ))}
+        </div>
+        <div className="mt-5 bg-white p-4 rounded-lg shadow">
+          <div>
+            {!isStarted && <Button onClick={handleStart}>Start</Button>}
+            {isStarted && <Button onClick={restart}>Restart</Button>}
             <Button
-              disabled={!isStarted || (active && isLastActiveButton(key))}
-              onClick={() => handleOption(key)}
+              className="ml-3"
+              disabled={!isStarted}
+              onClick={replayAudio}
             >
-              {active ? "-" : "+"}
+              Replay
             </Button>
           </div>
-        ))}
-        <div>
-          {!isStarted && <Button onClick={handleStart}>Start</Button>}
-          {isStarted && <Button onClick={restart}>Restart</Button>}
-          <Button disabled={!isStarted} onClick={replayAudio}>
-            Replay
-          </Button>
-        </div>
-        <div>
-          <p>Correct: {correct}</p>
-          <p>Incorrect: {incorrect}</p>
+          <div>
+            <p className="font-semibold">Correct: {correct}</p>
+            <p className="font-semibold">Incorrect: {incorrect}</p>
+          </div>
         </div>
       </div>
     </>

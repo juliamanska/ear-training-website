@@ -7,7 +7,7 @@ function App() {
     <>
       <NavBar />
       <Toaster />
-      <Staff />
+      {/* <Staff /> */}
     </>
   );
 }
