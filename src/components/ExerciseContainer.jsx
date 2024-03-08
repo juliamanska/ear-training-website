@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
 
-const ExerciseContainer = ({ soundsMap }) => {
+const ExerciseContainer = ({ soundsMap, nameFormatDisplay }) => {
   const [correct, setCorrect] = useState(0);
   const [incorrect, setIncorrect] = useState(0);
   const [isStarted, setIsStarted] = useState(false);
@@ -132,11 +132,17 @@ const ExerciseContainer = ({ soundsMap }) => {
             >
               <Button
                 variant="secondary"
-                className="w-5 sm:w-full text-md"
+                className="h-12 w-full text-md mx-5"
                 disabled={!isStarted || !active}
                 onClick={() => checkResult(key)}
               >
-                {key}
+                <div className="flex flex-col">
+                  <div className={`${nameFormatDisplay}`}>
+                    <div className="text-xl">{key.split(" ")[0]}</div>
+                    <div className="text-sm">{key.split(" ")[1]}</div>
+                  </div>
+                  <div>{key.split(" ")[2]}</div>
+                </div>
               </Button>
               <Button
                 disabled={!isStarted || (active && isLastActiveButton(key))}
