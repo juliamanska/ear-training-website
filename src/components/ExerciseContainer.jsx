@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
 
-const ExerciseContainer = ({ soundsMap }) => {
+const ExerciseContainer = ({ soundsMap, nameFormatDisplay }) => {
   const [correct, setCorrect] = useState(0);
   const [incorrect, setIncorrect] = useState(0);
   const [isStarted, setIsStarted] = useState(false);
@@ -123,34 +123,53 @@ const ExerciseContainer = ({ soundsMap }) => {
 
   return (
     <>
-      <div className="bg-green-200 p-5 flex flex-col">
-        {items.map(({ key, active }) => (
-          <div key={key}>
-            <Button
-              variant="secondary"
-              disabled={!isStarted || !active}
-              onClick={() => checkResult(key)}
+      <div className="mx-auto max-w-md rounded-2xl bg-green-200 p-10 shadow ">
+        <div className="grid grid-cols-2 gap-x-10">
+          {items.map(({ key, active }) => (
+            <div
+              className="flex items-center mb-2 justify-between gap-18"
+              key={key}
             >
-              {key}
-            </Button>
+              <Button
+                variant="secondary"
+                className="h-12 w-full text-md mx-5"
+                disabled={!isStarted || !active}
+                onClick={() => checkResult(key)}
+              >
+                <div className="flex flex-col">
+                  <div className={`${nameFormatDisplay}`}>
+                    <div className="text-xl">{key.split(" ")[0]}</div>
+                    <div className="text-sm">{key.split(" ")[1]}</div>
+                  </div>
+                  <div>{key.split(" ")[2]}</div>
+                </div>
+              </Button>
+              <Button
+                disabled={!isStarted || (active && isLastActiveButton(key))}
+                onClick={() => handleOption(key)}
+                className="px-3 text-white text-xl items-center "
+              >
+                {active ? "x" : "+"}
+              </Button>
+            </div>
+          ))}
+        </div>
+        <div className="mt-5 bg-white p-4 rounded-lg shadow">
+          <div>
+            {!isStarted && <Button onClick={handleStart}>Start</Button>}
+            {isStarted && <Button onClick={restart}>Restart</Button>}
             <Button
-              disabled={!isStarted || (active && isLastActiveButton(key))}
-              onClick={() => handleOption(key)}
+              className="ml-3"
+              disabled={!isStarted}
+              onClick={replayAudio}
             >
-              {active ? "-" : "+"}
+              Replay
             </Button>
           </div>
-        ))}
-        <div>
-          {!isStarted && <Button onClick={handleStart}>Start</Button>}
-          {isStarted && <Button onClick={restart}>Restart</Button>}
-          <Button disabled={!isStarted} onClick={replayAudio}>
-            Replay
-          </Button>
-        </div>
-        <div>
-          <p>Correct: {correct}</p>
-          <p>Incorrect: {incorrect}</p>
+          <div>
+            <p className="font-semibold">Correct: {correct}</p>
+            <p className="font-semibold">Incorrect: {incorrect}</p>
+          </div>
         </div>
       </div>
     </>

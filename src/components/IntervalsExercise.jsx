@@ -1,4 +1,4 @@
-import ExerciseContainer from "../ExerciseContainer";
+import ExerciseContainer from "./ExerciseContainer";
 
 const IntervalsExercise = () => {
   const intervalsMap = {
@@ -55,12 +55,11 @@ const IntervalsExercise = () => {
       new Audio("src/assets/intervals/8_2.mp3"),
     ],
   };
-  console.log(Object.keys(intervalsMap).toString());
 
   return (
     <>
       <div>IntervalsExercise</div>
-      <ExerciseContainer soundsMap={intervalsMap} />
+      <ExerciseContainer soundsMap={intervalsMap} gridCols={2} />
     </>
   );
 };
