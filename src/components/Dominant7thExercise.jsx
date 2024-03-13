@@ -30,10 +30,10 @@ const Dominant7thExercise = () => {
 
   return (
     <>
-      <div>Dominant7thExercise</div>
       <ExerciseContainer
         soundsMap={dominant7thMap}
         nameFormatDisplay={"flex"}
+        exerciseName={"Dominant 7th"}
       />
     </>
   );

@@ -1,4 +1,5 @@
 import ExerciseContainer from "./ExerciseContainer";
+import Staff from "./Staff";
 
 const TetradsExercise = () => {
   const tetradsMap = {
@@ -19,7 +20,13 @@ const TetradsExercise = () => {
   };
 
   return (
-    <ExerciseContainer soundsMap={tetradsMap} nameFormatDisplay={"flex"} />
+    <>
+      <ExerciseContainer
+        soundsMap={tetradsMap}
+        nameFormatDisplay={"flex"}
+        exerciseName={"Tetrads"}
+      />
+    </>
   );
 };
 

@@ -46,8 +46,7 @@ const TriadsExercise = () => {
   };
   return (
     <>
-      <div>Triads Exercise </div>;
-      <ExerciseContainer soundsMap={triadsMap} />;
+      <ExerciseContainer soundsMap={triadsMap} exerciseName={"Triads"} />;
     </>
   );
 };

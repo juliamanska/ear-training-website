@@ -58,8 +58,7 @@ const IntervalsExercise = () => {
 
   return (
     <>
-      <div>IntervalsExercise</div>
-      <ExerciseContainer soundsMap={intervalsMap} gridCols={2} />
+      <ExerciseContainer soundsMap={intervalsMap} exerciseName={"Intervals"} />
     </>
   );
 };
