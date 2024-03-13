@@ -1,21 +1,40 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-.heading-logo{
-    font-size: 18px;
-    display: block;
-    font-size: 1.1rem;
+  
+.heading-logo {
+    font-size: 1.3rem;
     font-weight: 500;
-}
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); 
+  }
+  
 
 .open-menu{
-    background: white;
-    border-radius: 10px;
-    height: 30px;
-    width: 122px;
-    padding: 5px;
-    margin: 20px 0;
-    font-size: 0.875rem;
-    font-weight: 500;
+    margin-top: 20px;
+    padding: 12px 10px;
+    font-size: 1.1rem;
+    color: white;
+    text-align: center;
+    border-radius: 8px;
+    font-weight: bold; 
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    letter-spacing: 1px;
+    height: 45px;
+    width: 195px;
+    background-color: rgba(255, 125, 0);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); 
 }
+
+.nav-button {
+    padding: 12px 20px;
+    color: white;
+    text-align: center;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+    margin: 0 2px;
+    font-weight: 600;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
