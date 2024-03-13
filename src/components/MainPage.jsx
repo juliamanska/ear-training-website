@@ -1,15 +1,16 @@
 import { NavLink } from "react-router-dom";
-import logoEar from "../assets/icons/logoEar.svg";
+import notes from "../assets/icons/notes.svg";
 
 const MainPage = () => {
   return (
     <>
       <div className="bg-teal-600 text-white h-screen flex flex-col justify-center items-center gap-5 relative overflow-hidden">
-        <div></div>
-        <div className="z-10 bg-white p-5 rounded-2xl">
-          <img src={logoEar} className="scale-125 mb-4" alt="Ear Logo" />
+        <div className="z-10 bg-white py-12  p-5 rounded-2xl">
           <div className="px-3 text-center text-teal-900 flex flex-col items-center">
-            <h1 className="text-4xl font-bold mb-8">Ear Training</h1>
+            <h1 className="text-4xl font-bold mb-8 flex gap-5">
+              <img src={notes} className="scale-125 mb-4" alt="Ear Logo" />
+              Ear Training
+            </h1>
 
             <p className="text-lg text-gray-600">Choose your challenge!</p>
           </div>
