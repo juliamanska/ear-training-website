@@ -122,7 +122,7 @@ const ExerciseContainer = ({ soundsMap, nameFormatDisplay, exerciseName }) => {
 
   return (
     <>
-      <div className="mx-auto max-w-md rounded-2xl bg-teal-800 px-10 py-6 shadow ">
+      <div className="mx-auto max-w-md rounded-2xl bg-teal-800 px-2 sm:px-10 py-6 shadow  ">
         <div>
           <h2 className="title">{`${exerciseName}`}</h2>
         </div>

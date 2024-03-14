@@ -26,7 +26,7 @@ const NavBar = () => {
   return (
     <>
       {!isMainPage && (
-        <nav className="p-5 sm:px-20 my-5 justify-between flex bg-gradient-to-r from-teal-900 via-teal-700 to-teal-500 gap-10">
+        <nav className="p-5 px-2 sm:px-20 my-5 justify-between flex bg-gradient-to-r from-teal-900 via-teal-700 to-teal-500 gap-10">
           <NavLink to="/">
             <div className="flex gap-3 px-3">
               <img src={notes} />
