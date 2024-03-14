@@ -6,6 +6,7 @@ const ExerciseContainer = ({ soundsMap, nameFormatDisplay, exerciseName }) => {
   const [correct, setCorrect] = useState(0);
   const [incorrect, setIncorrect] = useState(0);
   const [isStarted, setIsStarted] = useState(false);
+  const [isEdited, setIsEdited] = useState(false);
   const [items, setItems] = useState(
     Object.keys(soundsMap).map((key) => ({ key: key, active: true }))
   );
@@ -13,8 +14,8 @@ const ExerciseContainer = ({ soundsMap, nameFormatDisplay, exerciseName }) => {
   const { toast } = useToast();
 
   useEffect(() => {
-    if (isStarted) playRandomTetrad();
-  }, [items]);
+    if (isStarted && !isEdited) playRandomTetrad();
+  }, [items, isEdited]);
 
   const getRandomValue = (collection) => {
     let values = Object.values(collection);
@@ -113,11 +114,16 @@ const ExerciseContainer = ({ soundsMap, nameFormatDisplay, exerciseName }) => {
     playRandomTetrad();
   };
 
+  const handleEdit = () => {
+    setIsEdited(!isEdited);
+  };
+
   const restart = () => {
     setCorrect(0);
     setIncorrect(0);
     setItems(Object.keys(soundsMap).map((key) => ({ key: key, active: true })));
     setPreviousValue(null);
+    playRandomTetrad();
   };
 
   return (
@@ -147,25 +153,26 @@ const ExerciseContainer = ({ soundsMap, nameFormatDisplay, exerciseName }) => {
                 </div>
               </Button>
               <Button
-                disabled={!isStarted || (active && isLastActiveButton(key))}
+                disabled={!isEdited || (active && isLastActiveButton(key))}
                 onClick={() => handleOption(key)}
-                className="px-3 text-white text-xl items-center "
+                className={`px-3 text-white text-xl items-center w-12 ${
+                  !isEdited ? "hidden" : ""
+                }`}
               >
-                {active ? "x" : "+"}
+                {active ? "-" : "+"}
               </Button>
             </div>
           ))}
         </div>
         <div className="mt-5 bg-white p-4 rounded-lg shadow">
-          <div>
+          <div className="flex gap-5 justify-center">
             {!isStarted && <Button onClick={handleStart}>Start</Button>}
             {isStarted && <Button onClick={restart}>Restart</Button>}
-            <Button
-              className="ml-3"
-              disabled={!isStarted}
-              onClick={replayAudio}
-            >
+            <Button disabled={!isStarted} onClick={replayAudio}>
               Replay
+            </Button>
+            <Button disabled={!isStarted} onClick={handleEdit}>
+              {isEdited ? "Save" : "Edit"}
             </Button>
           </div>
           <div>
