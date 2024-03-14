@@ -2,7 +2,6 @@ import { Route, Routes, NavLink, useLocation } from "react-router-dom";
 import {
   NavigationMenu,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
 import {
@@ -38,31 +37,35 @@ const NavBar = () => {
           <NavigationMenu className="gap-5 hidden sm:flex">
             <NavigationMenuList className="text-white">
               <NavigationMenuItem>
-                <NavLink to="/tetrads">
-                  <NavigationMenuLink className="nav-button bg-orange-500 hover:bg-orange-600">
-                    Tetrads
-                  </NavigationMenuLink>
+                <NavLink
+                  to="/tetrads"
+                  className="nav-button bg-orange-500 hover:bg-orange-600"
+                >
+                  Tetrads
                 </NavLink>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <NavLink to="/intervals">
-                  <NavigationMenuLink className="nav-button bg-yellow-500 hover:bg-yellow-600">
-                    Intervals
-                  </NavigationMenuLink>
+                <NavLink
+                  to="/intervals"
+                  className="nav-button bg-yellow-500 hover:bg-yellow-600"
+                >
+                  Intervals
                 </NavLink>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <NavLink to="/triads">
-                  <NavigationMenuLink className="nav-button bg-teal-800 hover:bg-teal-900">
-                    Triads
-                  </NavigationMenuLink>
+                <NavLink
+                  to="/triads"
+                  className="nav-button bg-teal-800 hover:bg-teal-900"
+                >
+                  Triads
                 </NavLink>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <NavLink to="/dominant7th">
-                  <NavigationMenuLink className="nav-button bg-red-600 hover:bg-red-700">
-                    D7
-                  </NavigationMenuLink>
+                <NavLink
+                  to="/dominant7th"
+                  className="nav-button bg-red-600 hover:bg-red-700"
+                >
+                  D7
                 </NavLink>
               </NavigationMenuItem>
             </NavigationMenuList>
