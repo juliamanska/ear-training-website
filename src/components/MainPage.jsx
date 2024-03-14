@@ -15,28 +15,28 @@ const MainPage = () => {
             <p className="text-lg text-gray-600">Choose your challenge!</p>
           </div>
 
-          <div className="grid grid-cols-2 p-10 rounded-xl gap-4 mt-8 shadow bg-teal-700">
+          <div className="grid grid-cols-2 p-10 rounded-xl gap-5 mt-8 shadow bg-teal-700">
             <NavLink
               to="/tetrads"
-              className="py-3 px-8 bg-orange-400 hover:bg-orange-600 rounded-md text-white text-center translate-x-1"
+              className="nav-button bg-orange-500 hover:bg-orange-600"
             >
               Tetrads
             </NavLink>
             <NavLink
               to="/triads"
-              className="py-3 px-8 bg-teal-800 hover:bg-teal-900 rounded-md text-white text-center translate-x-1"
+              className="nav-button bg-teal-800 hover:bg-teal-900"
             >
               Triads
             </NavLink>
             <NavLink
               to="/intervals"
-              className="py-3 px-8 bg-yellow-500 hover:bg-yellow-600 rounded-md text-white text-center translate-x-1"
+              className="nav-button bg-yellow-500 hover:bg-yellow-600"
             >
               Intervals
             </NavLink>
             <NavLink
               to="/dominant7th"
-              className="py-3 px-8 bg-red-600 hover:bg-red-700 rounded-md text-white text-center  translate-x-1"
+              className="nav-button bg-red-600 hover:bg-red-700"
             >
               Dominant 7th
             </NavLink>

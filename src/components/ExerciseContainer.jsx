@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
 
-const ExerciseContainer = ({ soundsMap, nameFormatDisplay }) => {
+const ExerciseContainer = ({ soundsMap, nameFormatDisplay, exerciseName }) => {
   const [correct, setCorrect] = useState(0);
   const [incorrect, setIncorrect] = useState(0);
   const [isStarted, setIsStarted] = useState(false);
@@ -123,8 +123,11 @@ const ExerciseContainer = ({ soundsMap, nameFormatDisplay }) => {
 
   return (
     <>
-      <div className="mx-auto max-w-md rounded-2xl bg-green-200 p-10 shadow ">
-        <div className="grid grid-cols-2 gap-x-10">
+      <div className="mx-auto max-w-md rounded-2xl bg-teal-800 px-10 py-6 shadow ">
+        <div>
+          <h2 className="title">{`${exerciseName}`}</h2>
+        </div>
+        <div className="grid grid-cols-2 gap-x-5">
           {items.map(({ key, active }) => (
             <div
               className="flex items-center mb-2 justify-between gap-18"
@@ -132,7 +135,7 @@ const ExerciseContainer = ({ soundsMap, nameFormatDisplay }) => {
             >
               <Button
                 variant="secondary"
-                className="h-12 w-full text-md mx-5"
+                className="h-12 w-full text-md mr-5"
                 disabled={!isStarted || !active}
                 onClick={() => checkResult(key)}
               >
