@@ -118,7 +118,6 @@ const ExerciseContainer = ({ soundsMap, nameFormatDisplay, exerciseName }) => {
     setIncorrect(0);
     setItems(Object.keys(soundsMap).map((key) => ({ key: key, active: true })));
     setPreviousValue(null);
-    handleStart();
   };
 
   return (
