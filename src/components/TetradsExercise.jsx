@@ -15,7 +15,7 @@ const TetradsExercise = () => {
     "o 7<": new Audio("src/assets/tetrads/moll_7w.mp3"),
     "o 9>": new Audio("src/assets/tetrads/moll_9m.mp3"),
     "o 9": new Audio("src/assets/tetrads/moll_9w.mp3"),
-    "o> 7": new Audio("src/assets/tetrads/zmn_7.mp3"),
+    "o> 7": new Audio("src/assets/tetrads/zmn_7m.mp3"),
     "o> 7>": new Audio("src/assets/tetrads/zmn_7zm.mp3"),
   };
 
