@@ -2,7 +2,12 @@ import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
 
-const ExerciseContainer = ({ soundsMap, nameFormatDisplay, exerciseName }) => {
+const ExerciseContainer = ({
+  soundsMap,
+  nameFormatDisplay,
+  exerciseName,
+  buttonsArrangement,
+}) => {
   const [correct, setCorrect] = useState(0);
   const [incorrect, setIncorrect] = useState(0);
   const [isStarted, setIsStarted] = useState(false);
@@ -128,7 +133,7 @@ const ExerciseContainer = ({ soundsMap, nameFormatDisplay, exerciseName }) => {
 
   return (
     <>
-      <div className="sm:grid sm:row-start-5 sm:mx-auto max-w-md rounded-2xl bg-teal-800 px-2 sm:px-10 py-6 shadow relative  ">
+      <div className="sm:mx-auto max-w-md rounded-2xl bg-teal-800 px-2 sm:px-10 py-6 shadow relative  ">
         <div className="flex justify-between">
           <h2 className="title">{`${exerciseName}`}</h2>
           {isEdited && (
@@ -145,9 +150,11 @@ const ExerciseContainer = ({ soundsMap, nameFormatDisplay, exerciseName }) => {
         </div>
 
         <div className="grid grid-cols-2 gap-x-5">
-          {items.map(({ key, active }) => (
+          {items.map(({ key, active }, index) => (
             <div
-              className="flex items-center mb-2 justify-between gap-2"
+              className={`flex items-center mb-2 justify-between gap-2  ${
+                buttonsArrangement && buttonsArrangement(index)
+              }`}
               key={key}
             >
               <Button
