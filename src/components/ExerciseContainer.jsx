@@ -132,7 +132,7 @@ const ExerciseContainer = ({ soundsMap, nameFormatDisplay, exerciseName }) => {
         <div className="flex justify-between">
           <h2 className="title">{`${exerciseName}`}</h2>
           {isEdited && (
-            <p className="h-full border-2 bg-yellow-500 text-white p-1 rounded">
+            <p className="h-9 border-2 bg-yellow-500 text-white p-1 rounded ">
               Edit Mode
             </p>
           )}
