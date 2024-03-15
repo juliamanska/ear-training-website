@@ -129,8 +129,13 @@ const ExerciseContainer = ({ soundsMap, nameFormatDisplay, exerciseName }) => {
   return (
     <>
       <div className="mx-auto max-w-md rounded-2xl bg-teal-800 px-2 sm:px-10 py-6 shadow  ">
-        <div>
+        <div className="flex justify-between">
           <h2 className="title">{`${exerciseName}`}</h2>
+          {isEdited && (
+            <p className="h-full border-2 bg-yellow-500 text-white p-1 rounded">
+              Edit Mode
+            </p>
+          )}
         </div>
         <div className="grid grid-cols-2 gap-x-5">
           {items.map(({ key, active }) => (
