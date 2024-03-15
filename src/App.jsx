@@ -6,6 +6,7 @@ import Dominant7thExercise from "./components/Dominant7thExercise";
 import IntervalsExercise from "./components/IntervalsExercise";
 import TriadsExercise from "./components/TriadsExercise";
 import MainPage from "./components/MainPage";
+import NotFound from "./components/NotFound";
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
         <Route path="/triads" element={<TriadsExercise />} />
         <Route path="/tetrads" element={<TetradsExercise />} />
         <Route path="/dominant7th" element={<Dominant7thExercise />} />
-        <Route path="*" element={<h1>Not Found</h1>} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </>
   );
