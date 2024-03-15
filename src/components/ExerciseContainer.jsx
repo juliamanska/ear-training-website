@@ -174,8 +174,12 @@ const ExerciseContainer = ({ soundsMap, nameFormatDisplay, exerciseName }) => {
         <div className="mt-5 bg-white p-4 rounded-lg shadow">
           <div className="flex gap-5 justify-center">
             {!isStarted && <Button onClick={handleStart}>Start</Button>}
-            {isStarted && <Button onClick={restart}>Restart</Button>}
-            <Button disabled={!isStarted} onClick={replayAudio}>
+            {isStarted && (
+              <Button disabled={isEdited} onClick={restart}>
+                Restart
+              </Button>
+            )}
+            <Button disabled={!isStarted || isEdited} onClick={replayAudio}>
               Replay
             </Button>
             <Button onClick={handleEdit}>{isEdited ? "Save" : "Edit"}</Button>
