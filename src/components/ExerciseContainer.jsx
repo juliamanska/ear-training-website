@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
+import NavBar from "./NavBar";
 
 const ExerciseContainer = ({
   soundsMap,
@@ -133,6 +134,7 @@ const ExerciseContainer = ({
 
   return (
     <>
+      <NavBar />
       <div className="sm:mx-auto max-w-md rounded-2xl bg-teal-800 px-2 sm:px-10 py-6 shadow relative  ">
         <div className="flex justify-between">
           <h2 className="title">{`${exerciseName}`}</h2>
