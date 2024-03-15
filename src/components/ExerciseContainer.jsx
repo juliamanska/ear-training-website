@@ -140,8 +140,10 @@ const ExerciseContainer = ({ soundsMap, nameFormatDisplay, exerciseName }) => {
             >
               <Button
                 variant="secondary"
-                className="h-12 w-full text-md mr-5"
-                disabled={!isStarted || !active}
+                className={`h-12 w-full text-md mr-5 ${
+                  !active ? "bg-teal-600 text-teal-900" : ""
+                }`}
+                disabled={!isStarted || !active || isEdited}
                 onClick={() => checkResult(key)}
               >
                 <div className="flex flex-col">
