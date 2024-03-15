@@ -178,9 +178,7 @@ const ExerciseContainer = ({ soundsMap, nameFormatDisplay, exerciseName }) => {
             <Button disabled={!isStarted} onClick={replayAudio}>
               Replay
             </Button>
-            <Button disabled={!isStarted} onClick={handleEdit}>
-              {isEdited ? "Save" : "Edit"}
-            </Button>
+            <Button onClick={handleEdit}>{isEdited ? "Save" : "Edit"}</Button>
           </div>
           <div>
             <p className="font-semibold">Correct: {correct}</p>
