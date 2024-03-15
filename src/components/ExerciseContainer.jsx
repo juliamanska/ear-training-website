@@ -128,7 +128,7 @@ const ExerciseContainer = ({ soundsMap, nameFormatDisplay, exerciseName }) => {
 
   return (
     <>
-      <div className="mx-auto max-w-md rounded-2xl bg-teal-800 px-2 sm:px-10 py-6 shadow  ">
+      <div className="sm:grid sm:row-start-5 sm:mx-auto max-w-md rounded-2xl bg-teal-800 px-2 sm:px-10 py-6 shadow relative  ">
         <div className="flex justify-between">
           <h2 className="title">{`${exerciseName}`}</h2>
           {isEdited && (
@@ -136,16 +136,23 @@ const ExerciseContainer = ({ soundsMap, nameFormatDisplay, exerciseName }) => {
               Edit Mode
             </p>
           )}
+          {!isEdited && (
+            <div className="w-1/3 absolute shadow-xl top-6 right-10 p-1 px-3 text-white rounded-lg bg-orange-500">
+              <p className="font-semibold text-shadow">Correct: {correct}</p>
+              <p className="font-semibold">Incorrect: {incorrect}</p>
+            </div>
+          )}
         </div>
+
         <div className="grid grid-cols-2 gap-x-5">
           {items.map(({ key, active }) => (
             <div
-              className="flex items-center mb-2 justify-between gap-18"
+              className="flex items-center mb-2 justify-between gap-2"
               key={key}
             >
               <Button
                 variant="secondary"
-                className={`h-12 w-full text-md mr-5 ${
+                className={`h-12 w-full text-md ${
                   !active ? "bg-teal-600 text-teal-900" : ""
                 }`}
                 disabled={!isStarted || !active || isEdited}
@@ -171,22 +178,25 @@ const ExerciseContainer = ({ soundsMap, nameFormatDisplay, exerciseName }) => {
             </div>
           ))}
         </div>
-        <div className="mt-5 bg-white p-4 rounded-lg shadow">
+
+        <div className="mt-5 bg-white p-3 rounded-lg shadow">
           <div className="flex gap-5 justify-center">
             {!isStarted && <Button onClick={handleStart}>Start</Button>}
             {isStarted && (
-              <Button disabled={isEdited} onClick={restart}>
+              <Button className="w-full" disabled={isEdited} onClick={restart}>
                 Restart
               </Button>
             )}
-            <Button disabled={!isStarted || isEdited} onClick={replayAudio}>
+            <Button
+              className="w-full"
+              disabled={!isStarted || isEdited}
+              onClick={replayAudio}
+            >
               Replay
             </Button>
-            <Button onClick={handleEdit}>{isEdited ? "Save" : "Edit"}</Button>
-          </div>
-          <div>
-            <p className="font-semibold">Correct: {correct}</p>
-            <p className="font-semibold">Incorrect: {incorrect}</p>
+            <Button className="w-full" onClick={handleEdit}>
+              {isEdited ? "Save" : "Edit"}
+            </Button>
           </div>
         </div>
       </div>
