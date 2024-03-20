@@ -45,3 +45,19 @@
     font-weight: bold;
 }
 
+@keyframes pulsatingGlow {
+    0% {
+        box-shadow: 0 0 0 rgba(2, 148, 148, 0.7);
+      }
+      50% {
+        box-shadow: 0 0 20px 10px white;
+      }
+      100% {
+        box-shadow: 0 0 0 rgba(2, 148, 148, 0.7);
+      }
+  }
+  
+  .correct-animation {
+    animation: pulsatingGlow 1s ease-in-out;
+  }
+  

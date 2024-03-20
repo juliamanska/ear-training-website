@@ -9,8 +9,9 @@ const ExerciseContainer = ({
   exerciseName,
   buttonsArrangement,
 }) => {
-  const [correct, setCorrect] = useState(0);
-  const [incorrect, setIncorrect] = useState(0);
+  const [correctScore, setCorrectScore] = useState(0);
+  const [incorrectScore, setIncorrectScore] = useState(0);
+  const [isCorrectAnswer, setIsCorrectAnswer] = useState(false);
   const [isStarted, setIsStarted] = useState(false);
   const [isEdited, setIsEdited] = useState(false);
   const [items, setItems] = useState(
@@ -70,11 +71,15 @@ const ExerciseContainer = ({
         Array.isArray(soundsMap[userChoice]) &&
         soundsMap[userChoice].includes(previousValue)
       ) {
-        setCorrect((prev) => prev + 1);
+        setCorrectScore((prev) => prev + 1);
+        setIsCorrectAnswer(true);
+        setTimeout(() => setIsCorrectAnswer(false), 1000);
       } else if (userChoice === previousKey) {
-        setCorrect((prev) => prev + 1);
+        setCorrectScore((prev) => prev + 1);
+        setIsCorrectAnswer(true);
+        setTimeout(() => setIsCorrectAnswer(false), 1000);
       } else {
-        setIncorrect((prev) => prev + 1);
+        setIncorrectScore((prev) => prev + 1);
         toast({
           title: "Correct: ",
           description: `${previousKey}`,
@@ -129,8 +134,8 @@ const ExerciseContainer = ({
   };
 
   const restart = () => {
-    setCorrect(0);
-    setIncorrect(0);
+    setCorrectScore(0);
+    setIncorrectScore(0);
     setItems(Object.keys(soundsMap).map((key) => ({ key: key, active: true })));
     setPreviousValue(null);
     setAnswered(false);
@@ -148,9 +153,15 @@ const ExerciseContainer = ({
             </p>
           )}
           {!isEdited && (
-            <div className="w-1/3 absolute shadow-xl top-6 right-10 p-1 px-3 text-white rounded-lg bg-orange-500">
-              <p className="font-semibold text-shadow">Correct: {correct}</p>
-              <p className="font-semibold">Incorrect: {incorrect}</p>
+            <div
+              className={`w-1/3 absolute shadow-xl top-6 right-10 p-1 px-3 text-white rounded-lg bg-orange-500  ${
+                isCorrectAnswer ? "correct-animation" : ""
+              }`}
+            >
+              <p className="font-semibold text-shadow">
+                Correct: {correctScore}
+              </p>
+              <p className="font-semibold">Incorrect: {incorrectScore}</p>
             </div>
           )}
         </div>
