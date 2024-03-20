@@ -17,6 +17,7 @@ const ExerciseContainer = ({
     Object.keys(soundsMap).map((key) => ({ key: key, active: true }))
   );
   const [previousValue, setPreviousValue] = useState(null);
+  const [answered, setAnswered] = useState(true);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -44,41 +45,45 @@ const ExerciseContainer = ({
     const randomValue = getRandomValue(remainingSoundsMap);
     setPreviousValue(randomValue);
     randomValue.play();
+    setAnswered(false);
     console.log(randomValue);
   };
 
   const checkResult = (userChoice) => {
-    let previousKey = null;
+    if (!answered) {
+      let previousKey = null;
 
-    for (const key in soundsMap) {
-      if (Array.isArray(soundsMap[key])) {
-        if (soundsMap[key].includes(previousValue)) {
-          previousKey = key;
-          break;
-        }
-      } else {
-        if (soundsMap[key] === previousValue) {
-          previousKey = key;
-          break;
+      for (const key in soundsMap) {
+        if (Array.isArray(soundsMap[key])) {
+          if (soundsMap[key].includes(previousValue)) {
+            previousKey = key;
+            break;
+          }
+        } else {
+          if (soundsMap[key] === previousValue) {
+            previousKey = key;
+            break;
+          }
         }
       }
-    }
 
-    if (
-      Array.isArray(soundsMap[userChoice]) &&
-      soundsMap[userChoice].includes(previousValue)
-    ) {
-      setCorrect((prev) => prev + 1);
-    } else if (userChoice === previousKey) {
-      setCorrect((prev) => prev + 1);
-    } else {
-      setIncorrect((prev) => prev + 1);
-      toast({
-        title: "Correct: ",
-        description: `${previousKey}`,
-      });
+      if (
+        Array.isArray(soundsMap[userChoice]) &&
+        soundsMap[userChoice].includes(previousValue)
+      ) {
+        setCorrect((prev) => prev + 1);
+      } else if (userChoice === previousKey) {
+        setCorrect((prev) => prev + 1);
+      } else {
+        setIncorrect((prev) => prev + 1);
+        toast({
+          title: "Correct: ",
+          description: `${previousKey}`,
+        });
+      }
+      setTimeout(playRandomTetrad, 500);
+      setAnswered(true);
     }
-    setTimeout(playRandomTetrad, 500);
   };
 
   const replayAudio = () => {
@@ -130,6 +135,7 @@ const ExerciseContainer = ({
     setItems(Object.keys(soundsMap).map((key) => ({ key: key, active: true })));
     setPreviousValue(null);
     playRandomTetrad();
+    setAnswered(false);
   };
 
   return (
