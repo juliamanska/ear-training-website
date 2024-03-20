@@ -196,7 +196,11 @@ const ExerciseContainer = ({
 
         <div className="mt-5 bg-white p-3 rounded-lg shadow">
           <div className="flex gap-5 justify-center">
-            {!isStarted && <Button onClick={handleStart}>Start</Button>}
+            {!isStarted && (
+              <Button onClick={handleStart} disabled={isEdited}>
+                Start
+              </Button>
+            )}
             {isStarted && (
               <Button className="w-full" disabled={isEdited} onClick={restart}>
                 Restart
