@@ -1,20 +1,28 @@
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
+import NavBar from "./NavBar";
 
-const ExerciseContainer = ({ soundsMap, nameFormatDisplay, exerciseName }) => {
+const ExerciseContainer = ({
+  soundsMap,
+  nameFormatDisplay,
+  exerciseName,
+  buttonsArrangement,
+}) => {
   const [correct, setCorrect] = useState(0);
   const [incorrect, setIncorrect] = useState(0);
   const [isStarted, setIsStarted] = useState(false);
+  const [isEdited, setIsEdited] = useState(false);
   const [items, setItems] = useState(
     Object.keys(soundsMap).map((key) => ({ key: key, active: true }))
   );
   const [previousValue, setPreviousValue] = useState(null);
+  const [answered, setAnswered] = useState(true);
   const { toast } = useToast();
 
   useEffect(() => {
-    if (isStarted) playRandomTetrad();
-  }, [items]);
+    if (isStarted && !isEdited) playRandomTetrad();
+  }, [items, isEdited]);
 
   const getRandomValue = (collection) => {
     let values = Object.values(collection);
@@ -33,45 +41,48 @@ const ExerciseContainer = ({ soundsMap, nameFormatDisplay, exerciseName }) => {
       obj[key] = soundsMap[key];
       return obj;
     }, {});
-
     const randomValue = getRandomValue(remainingSoundsMap);
     setPreviousValue(randomValue);
     randomValue.play();
+    setAnswered(false);
     console.log(randomValue);
   };
 
   const checkResult = (userChoice) => {
-    let previousKey = null;
+    if (!answered) {
+      let previousKey = null;
 
-    for (const key in soundsMap) {
-      if (Array.isArray(soundsMap[key])) {
-        if (soundsMap[key].includes(previousValue)) {
-          previousKey = key;
-          break;
-        }
-      } else {
-        if (soundsMap[key] === previousValue) {
-          previousKey = key;
-          break;
+      for (const key in soundsMap) {
+        if (Array.isArray(soundsMap[key])) {
+          if (soundsMap[key].includes(previousValue)) {
+            previousKey = key;
+            break;
+          }
+        } else {
+          if (soundsMap[key] === previousValue) {
+            previousKey = key;
+            break;
+          }
         }
       }
-    }
 
-    if (
-      Array.isArray(soundsMap[userChoice]) &&
-      soundsMap[userChoice].includes(previousValue)
-    ) {
-      setCorrect((prev) => prev + 1);
-    } else if (userChoice === previousKey) {
-      setCorrect((prev) => prev + 1);
-    } else {
-      setIncorrect((prev) => prev + 1);
-      toast({
-        title: "Correct: ",
-        description: `${previousKey}`,
-      });
+      if (
+        Array.isArray(soundsMap[userChoice]) &&
+        soundsMap[userChoice].includes(previousValue)
+      ) {
+        setCorrect((prev) => prev + 1);
+      } else if (userChoice === previousKey) {
+        setCorrect((prev) => prev + 1);
+      } else {
+        setIncorrect((prev) => prev + 1);
+        toast({
+          title: "Correct: ",
+          description: `${previousKey}`,
+        });
+      }
+      setAnswered(true);
+      setTimeout(playRandomTetrad, 500);
     }
-    setTimeout(playRandomTetrad, 500);
   };
 
   const replayAudio = () => {
@@ -113,30 +124,51 @@ const ExerciseContainer = ({ soundsMap, nameFormatDisplay, exerciseName }) => {
     playRandomTetrad();
   };
 
+  const handleEdit = () => {
+    setIsEdited(!isEdited);
+  };
+
   const restart = () => {
     setCorrect(0);
     setIncorrect(0);
     setItems(Object.keys(soundsMap).map((key) => ({ key: key, active: true })));
     setPreviousValue(null);
-    handleStart();
+    setAnswered(false);
   };
 
   return (
     <>
-      <div className="mx-auto max-w-md rounded-2xl bg-teal-800 px-10 py-6 shadow ">
-        <div>
+      <NavBar />
+      <div className="sm:mx-auto max-w-md rounded-2xl bg-teal-800 px-2 sm:px-10 py-6 shadow relative  ">
+        <div className="flex justify-between">
           <h2 className="title">{`${exerciseName}`}</h2>
+          {isEdited && (
+            <p className="h-9 border-2 bg-yellow-500 text-white p-1 rounded ">
+              Edit Mode
+            </p>
+          )}
+          {!isEdited && (
+            <div className="w-1/3 absolute shadow-xl top-6 right-10 p-1 px-3 text-white rounded-lg bg-orange-500">
+              <p className="font-semibold text-shadow">Correct: {correct}</p>
+              <p className="font-semibold">Incorrect: {incorrect}</p>
+            </div>
+          )}
         </div>
+
         <div className="grid grid-cols-2 gap-x-5">
-          {items.map(({ key, active }) => (
+          {items.map(({ key, active }, index) => (
             <div
-              className="flex items-center mb-2 justify-between gap-18"
+              className={`flex items-center mb-2 justify-between gap-2  ${
+                buttonsArrangement && buttonsArrangement(index)
+              }`}
               key={key}
             >
               <Button
                 variant="secondary"
-                className="h-12 w-full text-md mr-5"
-                disabled={!isStarted || !active}
+                className={`h-12 w-full text-md ${
+                  !active ? "bg-teal-600 text-teal-900" : ""
+                }`}
+                disabled={!isStarted || !active || isEdited}
                 onClick={() => checkResult(key)}
               >
                 <div className="flex flex-col">
@@ -148,30 +180,40 @@ const ExerciseContainer = ({ soundsMap, nameFormatDisplay, exerciseName }) => {
                 </div>
               </Button>
               <Button
-                disabled={!isStarted || (active && isLastActiveButton(key))}
+                disabled={!isEdited || (active && isLastActiveButton(key))}
                 onClick={() => handleOption(key)}
-                className="px-3 text-white text-xl items-center "
+                className={`px-3 text-white text-xl items-center w-12 ${
+                  !isEdited ? "hidden" : ""
+                }`}
               >
-                {active ? "x" : "+"}
+                {active ? "-" : "+"}
               </Button>
             </div>
           ))}
         </div>
-        <div className="mt-5 bg-white p-4 rounded-lg shadow">
-          <div>
-            {!isStarted && <Button onClick={handleStart}>Start</Button>}
-            {isStarted && <Button onClick={restart}>Restart</Button>}
+
+        <div className="mt-5 bg-white p-3 rounded-lg shadow">
+          <div className="flex gap-5 justify-center">
+            {!isStarted && (
+              <Button onClick={handleStart} disabled={isEdited}>
+                Start
+              </Button>
+            )}
+            {isStarted && (
+              <Button className="w-full" disabled={isEdited} onClick={restart}>
+                Restart
+              </Button>
+            )}
             <Button
-              className="ml-3"
-              disabled={!isStarted}
+              className="w-full"
+              disabled={!isStarted || isEdited}
               onClick={replayAudio}
             >
               Replay
             </Button>
-          </div>
-          <div>
-            <p className="font-semibold">Correct: {correct}</p>
-            <p className="font-semibold">Incorrect: {incorrect}</p>
+            <Button className="w-full" onClick={handleEdit}>
+              {isEdited ? "Save" : "Edit"}
+            </Button>
           </div>
         </div>
       </div>
