@@ -146,7 +146,12 @@ const ExerciseContainer = ({
       <NavBar />
       <div className="sm:mx-auto max-w-md rounded-2xl bg-teal-800 px-2 sm:px-10 py-6 shadow relative  ">
         <div className="flex justify-between">
-          <h2 className="title">{`${exerciseName}`}</h2>
+          <h2 className="title flex">
+            {exerciseName.split(" ")[0]}
+            <span className="text-lg relative top-0">
+              {exerciseName.split(" ")[1]}
+            </span>
+          </h2>
           {isEdited && (
             <p className="h-9 border-2 bg-yellow-500 text-white p-1 rounded ">
               Edit Mode

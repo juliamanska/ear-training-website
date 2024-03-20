@@ -55,7 +55,7 @@ const NavBar = () => {
                 to="/dominant7th"
                 className="nav-button bg-red-600 hover:bg-red-700"
               >
-                D7
+                D<span className="text-xs relative -top-1">7</span>
               </NavLink>
             </NavigationMenuItem>
           </NavigationMenuList>
@@ -72,7 +72,7 @@ const NavBar = () => {
             </NavLink>
             <NavLink to="/dominant7th">
               <DropdownMenuItem className="nav-button bg-red-600">
-                D7
+                D<span className="text-xs relative -top-1">7</span>
               </DropdownMenuItem>
             </NavLink>
             <NavLink to="/triads">
