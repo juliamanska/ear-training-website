@@ -8,7 +8,11 @@ const MainPage = () => {
         <div className="z-10 bg-white py-12  p-5 rounded-2xl">
           <div className="px-3 text-center text-teal-900 flex flex-col items-center">
             <h1 className="text-4xl font-bold mb-8 flex gap-5">
-              <img src={notes} className="scale-125 mb-4" alt="Ear Logo" />
+              <img
+                src={notes}
+                className="scale-125 mb-4 min-h-12 min-w-12"
+                alt="Ear Logo"
+              />
               Ear Training
             </h1>
 
