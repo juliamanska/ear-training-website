@@ -179,38 +179,34 @@ const ExerciseContainer = ({
                   <div>{key.split(" ")[2]}</div>
                 </div>
               </Button>
-              <Button
-                disabled={!isEdited || (active && isLastActiveButton(key))}
-                onClick={() => handleOption(key)}
-                className={`px-3 text-white text-xl items-center w-12 ${
-                  !isEdited ? "hidden" : ""
-                }`}
-              >
-                {active ? "-" : "+"}
-              </Button>
+              {isEdited && (
+                <Button
+                  disabled={active && isLastActiveButton(key)}
+                  onClick={() => handleOption(key)}
+                  className="px-3 text-white text-xl items-center w-12"
+                >
+                  {active ? "-" : "+"}
+                </Button>
+              )}
             </div>
           ))}
         </div>
 
         <div className="mt-5 bg-white p-3 rounded-lg shadow">
           <div className="flex gap-5 justify-center">
-            {!isStarted && (
-              <Button onClick={handleStart} disabled={isEdited}>
-                Start
-              </Button>
+            {!isStarted && !isEdited && (
+              <Button onClick={handleStart}>Start</Button>
             )}
-            {isStarted && (
-              <Button className="w-full" disabled={isEdited} onClick={restart}>
+            {isStarted && !isEdited && (
+              <Button className="w-full" onClick={restart}>
                 Restart
               </Button>
             )}
-            <Button
-              className="w-full"
-              disabled={!isStarted || isEdited}
-              onClick={replayAudio}
-            >
-              Replay
-            </Button>
+            {!isEdited && isStarted && (
+              <Button className="w-full" onClick={replayAudio}>
+                Replay
+              </Button>
+            )}
             <Button className="w-full" onClick={handleEdit}>
               {isEdited ? "Save" : "Edit"}
             </Button>
