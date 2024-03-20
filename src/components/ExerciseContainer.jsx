@@ -41,7 +41,6 @@ const ExerciseContainer = ({
       obj[key] = soundsMap[key];
       return obj;
     }, {});
-
     const randomValue = getRandomValue(remainingSoundsMap);
     setPreviousValue(randomValue);
     randomValue.play();
@@ -81,8 +80,8 @@ const ExerciseContainer = ({
           description: `${previousKey}`,
         });
       }
-      setTimeout(playRandomTetrad, 500);
       setAnswered(true);
+      setTimeout(playRandomTetrad, 500);
     }
   };
 
@@ -134,7 +133,6 @@ const ExerciseContainer = ({
     setIncorrect(0);
     setItems(Object.keys(soundsMap).map((key) => ({ key: key, active: true })));
     setPreviousValue(null);
-    playRandomTetrad();
     setAnswered(false);
   };
 
