@@ -193,21 +193,26 @@ const ExerciseContainer = ({
         </div>
 
         <div className="mt-5 bg-white p-3 rounded-lg shadow">
-          <div className="flex gap-5 justify-center">
+          <div className="flex gap-5 justify-around">
             {!isStarted && !isEdited && (
-              <Button onClick={handleStart}>Start</Button>
+              <Button className="w-1/2" onClick={handleStart}>
+                Start
+              </Button>
             )}
             {isStarted && !isEdited && (
-              <Button className="w-full" onClick={restart}>
+              <Button className="w-1/2" onClick={restart}>
                 Restart
               </Button>
             )}
             {!isEdited && isStarted && (
-              <Button className="w-full" onClick={replayAudio}>
+              <Button className="w-1/2" onClick={replayAudio}>
                 Replay
               </Button>
             )}
-            <Button className="w-full" onClick={handleEdit}>
+            <Button
+              className={isEdited ? "w-full" : "w-1/2"}
+              onClick={handleEdit}
+            >
               {isEdited ? "Save" : "Edit"}
             </Button>
           </div>
