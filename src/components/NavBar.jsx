@@ -15,7 +15,7 @@ import notes from "../assets/icons/notes.svg";
 const NavBar = () => {
   return (
     <>
-      <nav className="p-5 px-2 sm:px-20 my-5 justify-between flex bg-gradient-to-r from-teal-900 via-teal-700 to-teal-500 gap-10">
+      <nav className="p-5 px-2 sm:px-20 mb-5 justify-between flex bg-gradient-to-r from-teal-700 via-teal-800 to-teal-900 gap-10">
         <NavLink to="/">
           <div className="flex gap-3 px-3">
             <img src={notes} />
@@ -29,7 +29,7 @@ const NavBar = () => {
             <NavigationMenuItem>
               <NavLink
                 to="/tetrads"
-                className="nav-button bg-orange-500 hover:bg-orange-600"
+                className="nav-button bg-orange-600 hover:bg-orange-700"
               >
                 Tetrads
               </NavLink>
@@ -37,7 +37,7 @@ const NavBar = () => {
             <NavigationMenuItem>
               <NavLink
                 to="/intervals"
-                className="nav-button bg-yellow-500 hover:bg-yellow-600"
+                className="nav-button bg-teal-500 hover:bg-teal-600"
               >
                 Intervals
               </NavLink>
@@ -45,7 +45,7 @@ const NavBar = () => {
             <NavigationMenuItem>
               <NavLink
                 to="/triads"
-                className="nav-button bg-teal-800 hover:bg-teal-900"
+                className="nav-button bg-yellow-500 hover:bg-yellow-600"
               >
                 Triads
               </NavLink>
@@ -61,28 +61,28 @@ const NavBar = () => {
           </NavigationMenuList>
         </NavigationMenu>
         <DropdownMenu>
-          <DropdownMenuTrigger className="open-menu block sm:hidden bg-red-50 p-3">
+          <DropdownMenuTrigger className="open-menu block sm:hidden bg-red-50 mx-2">
             Open Menu
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-48">
+            <NavLink to="/tetrads">
+              <DropdownMenuItem className="nav-button bg-orange-600">
+                Tetrads
+              </DropdownMenuItem>
+            </NavLink>
             <NavLink to="/intervals">
-              <DropdownMenuItem className="nav-button bg-yellow-500">
+              <DropdownMenuItem className="nav-button bg-teal-500">
                 Intervals
+              </DropdownMenuItem>
+            </NavLink>
+            <NavLink to="/triads">
+              <DropdownMenuItem className="nav-button bg-yellow-500">
+                Triads
               </DropdownMenuItem>
             </NavLink>
             <NavLink to="/dominant7th">
               <DropdownMenuItem className="nav-button bg-red-600">
                 D<span className="text-xs relative -top-1">7</span>
-              </DropdownMenuItem>
-            </NavLink>
-            <NavLink to="/triads">
-              <DropdownMenuItem className="nav-button bg-teal-800">
-                Triads
-              </DropdownMenuItem>
-            </NavLink>
-            <NavLink to="/tetrads">
-              <DropdownMenuItem className="nav-button bg-orange-500">
-                Tetrads
               </DropdownMenuItem>
             </NavLink>
           </DropdownMenuContent>
