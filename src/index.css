@@ -1,9 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-  
+ 
+
+body {
+  background-image: url('./assets/icons/staff.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 .heading-logo {
-    font-size: 1.3rem;
+    font-size: 1.5rem;
     font-weight: 500;
     color: white;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); 
@@ -31,7 +38,7 @@
     color: white;
     text-align: center;
     border-radius: 8px;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     letter-spacing: 1px;
     margin: 0 2px;
     font-weight: 600;
@@ -60,4 +67,3 @@
   .correct-animation {
     animation: pulsatingGlow 1s ease-in-out;
   }
-  
