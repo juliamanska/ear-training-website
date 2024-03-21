@@ -34,6 +34,7 @@ const Dominant7thExercise = () => {
         soundsMap={dominant7thMap}
         nameFormatDisplay={"flex"}
         exerciseName={"D 7"}
+        gridCols={1}
       />
     </>
   );

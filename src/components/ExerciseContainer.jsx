@@ -8,6 +8,7 @@ const ExerciseContainer = ({
   nameFormatDisplay,
   exerciseName,
   buttonsArrangement,
+  gridCols,
 }) => {
   const [correctScore, setCorrectScore] = useState(0);
   const [incorrectScore, setIncorrectScore] = useState(0);
@@ -144,7 +145,7 @@ const ExerciseContainer = ({
   return (
     <>
       <NavBar />
-      <div className="sm:mx-auto max-w-md rounded-2xl bg-teal-800 px-2 sm:px-10 py-6 shadow relative  ">
+      <div className="sm:mx-auto max-w-xl rounded-2xl bg-teal-900 px-2 sm:px-8 py-6 shadow relative">
         <div className="flex justify-between">
           <h2 className="title flex">
             {exerciseName.split(" ")[0]}
@@ -153,13 +154,13 @@ const ExerciseContainer = ({
             </span>
           </h2>
           {isEdited && (
-            <p className="h-9 border-2 bg-yellow-500 text-white p-1 rounded ">
+            <span className="h-12 align-center py-3 px-5  text-lg bg-yellow-500 text-white p-2 rounded">
               Edit Mode
-            </p>
+            </span>
           )}
           {!isEdited && (
             <div
-              className={`w-1/3 absolute shadow-xl top-6 right-10 p-1 px-3 text-white rounded-lg bg-orange-500  ${
+              className={`w-32 absolute shadow-xl top-7 sm:right-8 right-3 p-1 px-2 text-lg text-white rounded-lg bg-orange-600  ${
                 isCorrectAnswer ? "correct-animation" : ""
               }`}
             >
@@ -171,7 +172,7 @@ const ExerciseContainer = ({
           )}
         </div>
 
-        <div className="grid grid-cols-2 gap-x-5">
+        <div className={`grid grid-cols-${gridCols} gap-x-5`}>
           {items.map(({ key, active }, index) => (
             <div
               className={`flex items-center mb-2 justify-between gap-2  ${
@@ -208,25 +209,25 @@ const ExerciseContainer = ({
           ))}
         </div>
 
-        <div className="mt-5 bg-white p-3 rounded-lg shadow">
-          <div className="flex gap-5 justify-around">
+        <div className="mt-5 py-1">
+          <div className="flex gap-5  justify-around">
             {!isStarted && !isEdited && (
-              <Button className="w-1/2" onClick={handleStart}>
+              <Button className="w-1/2 text-xl" onClick={handleStart}>
                 Start
               </Button>
             )}
             {isStarted && !isEdited && (
-              <Button className="w-1/2" onClick={restart}>
+              <Button className="w-1/2 text-xl" onClick={restart}>
                 Restart
               </Button>
             )}
             {!isEdited && isStarted && (
-              <Button className="w-1/2" onClick={replayAudio}>
+              <Button className="w-1/2 text-xl" onClick={replayAudio}>
                 Replay
               </Button>
             )}
             <Button
-              className={isEdited ? "w-full" : "w-1/2"}
+              className={`text-xl ${isEdited ? "w-full" : "w-1/2"}`}
               onClick={handleEdit}
             >
               {isEdited ? "Save" : "Edit"}

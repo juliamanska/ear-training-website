@@ -25,6 +25,7 @@ const TetradsExercise = () => {
         soundsMap={tetradsMap}
         nameFormatDisplay={"flex"}
         exerciseName={"Tetrads"}
+        gridCols={2}
       />
     </>
   );
