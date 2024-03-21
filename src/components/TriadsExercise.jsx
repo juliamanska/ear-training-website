@@ -44,9 +44,19 @@ const TriadsExercise = () => {
       new Audio("src/assets/triads/zw_3.mp3"),
     ],
   };
+  const keys = Object.keys(triadsMap);
+
   return (
     <>
-      <ExerciseContainer soundsMap={triadsMap} exerciseName={"Triads"} />;
+      <ExerciseContainer
+        soundsMap={triadsMap}
+        exerciseName={"Triads"}
+        gridCols={3}
+        buttonsArrangement={(index) =>
+          index === keys.indexOf("+<") ? "col-span-3 w-1/2 m-auto" : ""
+        }
+      />
+      ;
     </>
   );
 };
