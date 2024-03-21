@@ -1,5 +1,4 @@
 import { Toaster } from "@/components/ui/toaster";
-import Staff from "./components/Staff";
 import { Route, Routes } from "react-router-dom";
 import TetradsExercise from "./components/TetradsExercise";
 import Dominant7thExercise from "./components/Dominant7thExercise";
@@ -12,7 +11,6 @@ function App() {
   return (
     <>
       <Toaster />
-      {/* <Staff /> */}
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/intervals" element={<IntervalsExercise />} />

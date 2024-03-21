@@ -8,9 +8,11 @@ const ExerciseContainer = ({
   nameFormatDisplay,
   exerciseName,
   buttonsArrangement,
+  gridCols,
 }) => {
-  const [correct, setCorrect] = useState(0);
-  const [incorrect, setIncorrect] = useState(0);
+  const [correctScore, setCorrectScore] = useState(0);
+  const [incorrectScore, setIncorrectScore] = useState(0);
+  const [isCorrectAnswer, setIsCorrectAnswer] = useState(false);
   const [isStarted, setIsStarted] = useState(false);
   const [isEdited, setIsEdited] = useState(false);
   const [items, setItems] = useState(
@@ -70,11 +72,15 @@ const ExerciseContainer = ({
         Array.isArray(soundsMap[userChoice]) &&
         soundsMap[userChoice].includes(previousValue)
       ) {
-        setCorrect((prev) => prev + 1);
+        setCorrectScore((prev) => prev + 1);
+        setIsCorrectAnswer(true);
+        setTimeout(() => setIsCorrectAnswer(false), 1000);
       } else if (userChoice === previousKey) {
-        setCorrect((prev) => prev + 1);
+        setCorrectScore((prev) => prev + 1);
+        setIsCorrectAnswer(true);
+        setTimeout(() => setIsCorrectAnswer(false), 1000);
       } else {
-        setIncorrect((prev) => prev + 1);
+        setIncorrectScore((prev) => prev + 1);
         toast({
           title: "Correct: ",
           description: `${previousKey}`,
@@ -129,8 +135,8 @@ const ExerciseContainer = ({
   };
 
   const restart = () => {
-    setCorrect(0);
-    setIncorrect(0);
+    setCorrectScore(0);
+    setIncorrectScore(0);
     setItems(Object.keys(soundsMap).map((key) => ({ key: key, active: true })));
     setPreviousValue(null);
     setAnswered(false);
@@ -139,23 +145,34 @@ const ExerciseContainer = ({
   return (
     <>
       <NavBar />
-      <div className="sm:mx-auto max-w-md rounded-2xl bg-teal-800 px-2 sm:px-10 py-6 shadow relative  ">
+      <div className="sm:mx-auto max-w-xl rounded-2xl bg-teal-900 px-2 sm:px-8 py-6 shadow relative">
         <div className="flex justify-between">
-          <h2 className="title">{`${exerciseName}`}</h2>
+          <h2 className="title flex">
+            {exerciseName.split(" ")[0]}
+            <span className="text-lg relative top-0">
+              {exerciseName.split(" ")[1]}
+            </span>
+          </h2>
           {isEdited && (
-            <p className="h-9 border-2 bg-yellow-500 text-white p-1 rounded ">
+            <span className="h-12 align-center py-3 px-5  text-lg bg-yellow-500 text-white p-2 rounded">
               Edit Mode
-            </p>
+            </span>
           )}
           {!isEdited && (
-            <div className="w-1/3 absolute shadow-xl top-6 right-10 p-1 px-3 text-white rounded-lg bg-orange-500">
-              <p className="font-semibold text-shadow">Correct: {correct}</p>
-              <p className="font-semibold">Incorrect: {incorrect}</p>
+            <div
+              className={`w-32 absolute shadow-xl top-7 sm:right-8 right-3 p-1 px-2 text-lg text-white rounded-lg bg-orange-600  ${
+                isCorrectAnswer ? "correct-animation" : ""
+              }`}
+            >
+              <p className="font-semibold text-shadow">
+                Correct: {correctScore}
+              </p>
+              <p className="font-semibold">Incorrect: {incorrectScore}</p>
             </div>
           )}
         </div>
 
-        <div className="grid grid-cols-2 gap-x-5">
+        <div className={`grid grid-cols-${gridCols} gap-x-5`}>
           {items.map(({ key, active }, index) => (
             <div
               className={`flex items-center mb-2 justify-between gap-2  ${
@@ -179,39 +196,40 @@ const ExerciseContainer = ({
                   <div>{key.split(" ")[2]}</div>
                 </div>
               </Button>
-              <Button
-                disabled={!isEdited || (active && isLastActiveButton(key))}
-                onClick={() => handleOption(key)}
-                className={`px-3 text-white text-xl items-center w-12 ${
-                  !isEdited ? "hidden" : ""
-                }`}
-              >
-                {active ? "-" : "+"}
-              </Button>
+              {isEdited && (
+                <Button
+                  disabled={active && isLastActiveButton(key)}
+                  onClick={() => handleOption(key)}
+                  className="px-3 text-white text-xl items-center w-12"
+                >
+                  {active ? "-" : "+"}
+                </Button>
+              )}
             </div>
           ))}
         </div>
 
-        <div className="mt-5 bg-white p-3 rounded-lg shadow">
-          <div className="flex gap-5 justify-center">
-            {!isStarted && (
-              <Button onClick={handleStart} disabled={isEdited}>
+        <div className="mt-5 py-1">
+          <div className="flex gap-5  justify-around">
+            {!isStarted && !isEdited && (
+              <Button className="w-1/2 text-xl" onClick={handleStart}>
                 Start
               </Button>
             )}
-            {isStarted && (
-              <Button className="w-full" disabled={isEdited} onClick={restart}>
+            {isStarted && !isEdited && (
+              <Button className="w-1/2 text-xl" onClick={restart}>
                 Restart
               </Button>
             )}
+            {!isEdited && isStarted && (
+              <Button className="w-1/2 text-xl" onClick={replayAudio}>
+                Replay
+              </Button>
+            )}
             <Button
-              className="w-full"
-              disabled={!isStarted || isEdited}
-              onClick={replayAudio}
+              className={`text-xl ${isEdited ? "w-full" : "w-1/2"}`}
+              onClick={handleEdit}
             >
-              Replay
-            </Button>
-            <Button className="w-full" onClick={handleEdit}>
               {isEdited ? "Save" : "Edit"}
             </Button>
           </div>

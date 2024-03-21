@@ -33,7 +33,8 @@ const Dominant7thExercise = () => {
       <ExerciseContainer
         soundsMap={dominant7thMap}
         nameFormatDisplay={"flex"}
-        exerciseName={"Dominant 7th"}
+        exerciseName={"D 7"}
+        gridCols={1}
       />
     </>
   );
