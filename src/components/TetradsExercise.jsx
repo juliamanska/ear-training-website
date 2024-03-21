@@ -1,5 +1,4 @@
 import ExerciseContainer from "./ExerciseContainer";
-import Staff from "./Staff";
 
 const TetradsExercise = () => {
   const tetradsMap = {

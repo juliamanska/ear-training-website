@@ -58,7 +58,6 @@ const IntervalsExercise = () => {
 
   const keys = Object.keys(intervalsMap);
 
-  console.log(keys.indexOf("1 "));
   return (
     <>
       <ExerciseContainer
